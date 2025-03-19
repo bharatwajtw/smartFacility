@@ -9,7 +9,6 @@ pre-commit-bff:
 
 test-bff:
 	@cd web-bff && make test-bff
-
 	@echo "Running Web bff test..."
 	@cd web-bff && mise exec -- pytest --asyncio-mode=auto tests/
 
