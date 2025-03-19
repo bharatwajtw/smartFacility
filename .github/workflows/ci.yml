@@ -12,37 +12,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.13'
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-      - name: Install dependencies
-        working-directory: web-bff  
+      - name: Build and run web-bff container
         run: |
-          python -m venv venv
-          source venv/bin/activate
-          pip install -r requirements.txt
-          pip install flake8 black   # Install linters and formatters
+          docker build -t web-bff -f docker/web-bff.Dockerfile .
+          docker run -d -p 8000:8000 web-bff
+          sleep 10  # Wait for container to start
 
-      - name: Check Code Formatting (black)
-        working-directory: web-bff  
+      - name: Run tests
         run: |
-          source venv/bin/activate
-          black .        
-
-      - name: Run Linting (flake8)
-        working-directory: web-bff  
-        run: |
-          source venv/bin/activate
-          flake8 . --count --show-source --statistics
-
-
-      - name: Run FastAPI app
-        working-directory: web-bff  
-        run: |
-          source venv/bin/activate
-          uvicorn main:app --host 127.0.0.1 --port 8000 &
+          docker exec $(docker ps -q) mise exec -- poetry run pytest --asyncio-mode=auto tests/
 
       - name: Check if service is running
-        run: curl -f http://127.0.0.1:8000/
+        run: curl -f http://localhost:8000/
