@@ -23,7 +23,8 @@ jobs:
 
       - name: Run tests
         run: |
-          docker exec $(docker ps -q) mise exec -- poetry run pytest --asyncio-mode=auto tests/
+          CONTAINER_ID=$(docker ps -q)
+          docker exec $CONTAINER_ID mise exec -- poetry run pytest --asyncio-mode=auto tests/
 
       - name: Check if service is running
         run: curl -f http://localhost:8000/
