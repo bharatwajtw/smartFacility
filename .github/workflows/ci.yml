@@ -5,6 +5,7 @@ on:
   pull_request:
     branches:
       - main
+
 jobs:
   web-bff:
     runs-on: ubuntu-latest
@@ -17,14 +18,44 @@ jobs:
 
       - name: Build and run web-bff container
         run: |
+          # Stop and remove any existing container with the same name
+          docker stop web-bff-container || true
+          docker rm web-bff-container || true
+          
+          # Build and run the container
           docker build -t web-bff -f docker/web-bff.Dockerfile .
-          docker run -d -p 8000:8000 web-bff
-          sleep 10  # Wait for container to start
+          docker run -d --name web-bff-container -p 8000:8000 web-bff
+
+      - name: Debug Container ID
+        run: |
+          CONTAINER_ID=$(docker ps -q --filter "name=web-bff-container")
+          echo "Running Container ID: $CONTAINER_ID"
+          if [ -z "$CONTAINER_ID" ]; then
+            echo "Error: No running container found!"
+            exit 1
+          fi
+
+      - name: Wait for service to be ready
+        run: |
+          for i in {1..10}; do
+            if curl -s http://localhost:8000/health > /dev/null; then
+              echo "Service is up!"
+              exit 0
+            fi
+            echo "Waiting for service..."
+            sleep 2
+          done
+          echo "Service did not start in time" && exit 1
+
+      - name: Debug Installed Tools
+        run: |
+          docker exec web-bff-container which mise || echo "mise not found"
+          docker exec web-bff-container which poetry || echo "poetry not found"
+          docker exec web-bff-container which pytest || echo "pytest not found"
 
       - name: Run tests
         run: |
-          CONTAINER_ID=$(docker ps -q)
-          docker exec $CONTAINER_ID mise exec -- poetry run pytest --asyncio-mode=auto tests/
+          docker exec web-bff-container mise exec -- poetry run pytest --asyncio-mode=auto tests/
 
       - name: Check if service is running
         run: curl -f http://localhost:8000/
