@@ -1,25 +1,15 @@
 run-bff:
-	echo "Running Web bff app..."
-	@cd web-bff && mise exec -- poetry install --no-root
-	@cd web-bff && mise exec -- poetry run uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+	@cd web-bff && make run-bff
 
 install-bff:
-	@echo "Installing $(p) Web bff test..."
-	@cd web-bff && mise exec -- poetry add $(p)
+	@cd web-bff && make install-bff
 
-lint-bff:
-	@echo "Running Web bff linting..."
-	@cd web-bff && mise exec -- ruff check .
-
-lint-fix-bff:
-	@echo "Running Web bff lint fix..."
-	@cd web-bff && mise exec -- ruff check --fix .
-
-format-bff:
-	@echo "Running Web bff format..."
-	@cd web-bff && mise exec -- ruff format .
+pre-commit-bff:
+	@cd web-bff && make pre-commit-bff
 
 test-bff:
+	@cd web-bff && make test-bff
+
 	@echo "Running Web bff test..."
 	@cd web-bff && mise exec -- pytest --asyncio-mode=auto tests/
 

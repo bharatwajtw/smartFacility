@@ -1,16 +1,23 @@
 # Smart Facility
 A unified platform that integrates smart devices across diverse facilities, empowering users with remote access, real-time monitoring, insights, and automated scheduling for smarter facility management.
 
-## Prerequisites
-- Install `mise` (a tool for managing isolated environments).
+## Project Setup
 
-## Steps to Run the App
+1. Ensure you have Python 3.13.2 installed on your system. You can download it from [python.org](https://www.python.org/downloads/).
 
-### Run the Web BFF App
-```bash
-make run-bff
-```
-This command installs the dependencies and starts the Web BFF app using Uvicorn on `127.0.0.1:8000`.
+2. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd smartFacility
+   ```
+
+3. Run the application:
+   ```bash
+   make run-bff
+   ```
 
 ## Additional Information
-For development-related instructions, refer to the [CONTRIBUTING.md](CONTRIBUTING.md) file.
+
+- For detailed contribution guidelines, refer to the [CONTRIBUTING.md](CONTRIBUTING.md) file.
+
+Thank you for using Smart Facility!

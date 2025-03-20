@@ -57,12 +57,12 @@ keep-runtime-typing = true
 
 [tool.pytest.ini_options]
 asyncio_default_fixture_loop_scope = "function"
-testpaths = ["tests"]
 python_files = ["test_*.py"]
+testpaths = ["tests"]
 
 [project]
 authors = [
-  {name = "crk4", email = "ranjith.kea@gmail.com"},
+  {name = "ranjithkumar", email = "ranjithkumar.c@thoughtworks.com"},
 ]
 dependencies = [
   "annotated-types (==0.7.0)",
