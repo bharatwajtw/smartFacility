@@ -102,7 +102,7 @@ dependencies = [
 description = "This is a backend for frontend service for web ui of smarty platform"
 name = "smarty-web-bff"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.13.2"
 version = "0.1.0"
 
 [build-system]
