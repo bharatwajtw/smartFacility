@@ -3,17 +3,28 @@ A unified platform that integrates smart devices across diverse facilities, empo
 
 ## Project Setup
 
-1. Ensure you have Python 3.13.2 installed on your system. You can download it from [python.org](https://www.python.org/downloads/).
+### Requirements
 
-2. Clone the repository:
+1. [Docker](https://docs.docker.com/get-started/get-docker)
+2. [Makefile](https://formulae.brew.sh/formula/make) _(Optional)_ ([What is Makefile?](https://opensource.com/article/18/8/what-how-makefile))
+
+### To run the project
+
+1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone git@github.com:bharatwajtw/smartFacility.git
    cd smartFacility
    ```
 
-3. Run the application:
+2. Run the application:
    ```bash
-   make run-bff
+   make run
+   ```
+
+   OR
+
+   ```bash
+   docker compose up
    ```
 
 ### Logging
