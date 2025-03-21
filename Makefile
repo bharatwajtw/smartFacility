@@ -1,3 +1,6 @@
+run:
+	docker compose up
+
 run-bff:
 	@cd web-bff && make run-bff
 
